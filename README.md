@@ -8,4 +8,4 @@
 2.Перейти в папку Blog/Blog запустить локальный сервер командой dotnet run
 3.Перейти в папку BlogClientApp запустить проект командой ng serve
 
-Сервер Andular находится по адресу http://localhost:4200/ и отправляет запросы на сервер ASP.NET Core по адресу http://localhost:50558
+Сервер Andular находится по адресу `http://localhost:4200/` и отправляет запросы на сервер ASP.NET Core по адресу `http://localhost:50558`
