@@ -1,0 +1,50 @@
+<form [formGroup]="service.formModule" autocomplete="off" (submit)="onSubmit()">
+  <div class="form-group required">
+    <label>UserName</label>
+    <input class="form-control" formControlName="UserName">
+    <label class="text-danger"
+      *ngIf="service.formModule.get('UserName').touched && service.formModule.get('UserName').errors?.required">Обязательное
+      поле</label>
+  </div>
+
+  <!-- <div class="form-group">
+    <label>Email</label>
+    <input class="form-control" formControlName="Email">
+    <label class="text-danger"
+      *ngIf="service.formModule.get('Email').touched && service.formModule.get('Email').errors?.email">Неверный
+      email</label>
+  </div>
+  <div class="form-group">
+    <label>FullName</label>
+    <input class="form-control" formControlName="FullName">
+  </div> -->
+
+  <div formGroupName="Passwords">
+    <div class="form-group required">
+      <label>Password</label>
+      <input type="password" class="form-control" formControlName="Password">
+      <label class="text-danger"
+        *ngIf="service.formModule.get('Passwords.Password').touched && service.formModule.get('Passwords.Password').errors?.required">обязательное
+        поле</label>
+      <label class="text-danger"
+        *ngIf="service.formModule.get('Passwords.Password').touched && service.formModule.get('Passwords.Password').errors?.minlength">минимум
+        6 символов</label>
+    </div>
+    <div class="form-group required">
+      <label>ConfirmPassword</label>
+      <input type="password" class="form-control" formControlName="ConfirmPassword">
+      <label class="text-danger"
+        *ngIf="service.formModule.get('Passwords.ConfirmPassword').touched && service.formModule.get('Passwords.ConfirmPassword').errors?.required">обязательное
+        поле</label>
+      <label class="text-danger"
+        *ngIf="service.formModule.get('Passwords.ConfirmPassword').touched && service.formModule.get('Passwords.ConfirmPassword').errors?.passwordMismatch">пароли
+        не совпадают</label>
+    </div>
+  </div>
+
+  
+  <button type="submit" class="sub-btn" mat-flat-button [disabled]="!service.formModule.valid">Зарегестрироваться</button>
+  <label *ngIf="registrationFail" class="text-danger">Пользователь уже существует</label>
+  <label *ngIf="registrationSuccess" class="text-success">Регистрация прошла успешно</label>
+
+</form>

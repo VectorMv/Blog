@@ -1,0 +1,41 @@
+.blog-view{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top:50px;
+    width: 80%;
+}
+.pagination-btns{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+.main-menu{
+  
+   position: fixed;
+   top: 65px;
+   left: 75%;
+   right: 20px;
+   
+}
+
+.blog-item{
+    flex-basis: 45%;
+}
+
+.menu-header{
+    color: #e8e8e8;
+}
+
+.menu-subtitle{
+    margin-top: 15px;
+    color: #7D7D7D;
+}
+
+@media (max-width: 900px){
+    .blog-item{
+        flex-basis: 90%;
+    }
+}
+

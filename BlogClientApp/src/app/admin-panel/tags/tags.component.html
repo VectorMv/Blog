@@ -1,0 +1,39 @@
+<div class="my_container">
+
+  <div class="wrapper">
+    <div class="wrapped-div">
+
+      <form #Addform='ngForm' (submit)="AddTag(Addform)">
+        <div class="d-flex align-items-center">
+          <label>Добавить тэг</label>
+          <input #NewTag="ngModel" class="form-control" name="addTag" [(ngModel)]="newTag">
+          <button type="submit" class="btn btn-outline-secondary ml-2 w-10" style="width: 100px;">Добавить</button>
+        </div>
+      </form>
+      <label *ngIf="addTag" class="text-danger">Тэг уже существует</label>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    <div class="wrapped-div">
+
+      <form #deleteForm='ngForm' (submit)="DeleteTag(deleteForm)">
+        <div class="d-flex align-items-center">
+          <label>Удалить тэг</label>
+
+          <div class="d-flex flex-column flex-grow-1">
+            <mat-select [(ngModel)]="selectedValue" name="deleteTagId">
+              <mat-option *ngFor="let tagItem of tag" [value]="tagItem.tagId">
+                {{tagItem.tagName}}
+              </mat-option>
+            </mat-select>
+            <mat-divider></mat-divider>
+          </div>
+          <button type="submit" class="btn btn-outline-danger ml-2" style="width: 100px;">Удалить</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.wrapped-div {
+  margin-top: 70px;
+  background: #212121;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+}
+
+.tab-header {
+  text-align: center;
+}
+
+.tab-header h2.active {
+  color: #e8e8e8;
+  border-bottom: 4px solid #e8e8e8;
+}
+
+.tab-header h2 {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  display: inline-block;
+  padding: 30px 40px 10px 40px;
+  cursor: pointer;
+  color: #545d6a;
+  border-bottom: 2px solid #545d6a;
+}
+
+.tab-header h2:focus {
+  outline: none;
+}
+

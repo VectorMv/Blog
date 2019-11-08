@@ -1,0 +1,47 @@
+<div class="my_container">
+
+  <div class="wrapper">
+    <div class="wrapped-div">
+
+      <form #CreateArticle='ngForm' (submit)="createNewArticle(CreateArticle)">
+        <label>Ссылка на картинку (необязательно)</label>
+        <input class="form-control" name="imageLink" ngModel maxlength="200">
+        <label>Название статьи *</label>
+        <input class="form-control" name="name" ngModel required maxlength="80">
+        <label>Краткое описание *</label>
+        <textarea class="form-control" name="shortDescr" rows="3" ngModel required maxlength="200"></textarea>
+        <label>Полное описание *</label>
+        <textarea class="form-control" name="fullDescr" rows="10" ngModel required></textarea>
+
+        <label>Категория *</label>
+        <div class="d-flex flex-column flex-grow-1" style="width: 300px;">
+          <mat-select [(ngModel)]="selectedCategory" name="categoryValue" required>
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+              {{category.categoryName}}
+            </mat-option>
+          </mat-select>
+          <mat-divider></mat-divider>
+        </div>
+
+        <label>Тэги (необязательно)</label>
+        <div class="d-flex flex-column flex-grow-1" style="width: 300px;">
+          <mat-select [(ngModel)]="selectedTags" name="tags" multiple>
+            <mat-option *ngFor="let tag of tags" [value]="tag.tagId">
+              {{tag.tagName}}
+            </mat-option>
+          </mat-select>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="d-flex justify-content-between" style="margin-top: 30px;">
+          <button type="submit" class="btn btn-success" [disabled]="CreateArticle.invalid" >Создать</button>
+          <div>
+            <button type="button" class="btn btn-outline-danger mr-2" (click)="resetForm(CreateArticle)">Очистить</button>
+            <button type="button" class="btn btn-outline-danger" routerLink="">Отмена</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

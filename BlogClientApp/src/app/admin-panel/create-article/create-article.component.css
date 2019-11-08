@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.wrapped-div {
+  background: #212121;
+  padding: 30px;
+  width: 90%;
+  max-width: 1140px;
+  position: relative;
+}
+
+
+label:not(:first-child) {
+  margin-top: 20px;
+  font-size: 16px;
+  min-width: 200px;
+}
+
+.my_container {
+  margin-top: 70px;
+}
+
+.text-danger {
+  font-size: 12px;
+  position: relative;
+}

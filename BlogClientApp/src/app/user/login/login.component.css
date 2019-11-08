@@ -1,0 +1,15 @@
+form{
+    margin: 0px 16px;
+}
+
+form.form-group label{
+    font-size: 16px;
+}
+
+.sub-btn{
+    width: 100%;
+}
+
+.text-danger{
+    font-size: 12px;
+}

@@ -1,0 +1,34 @@
+<div class="blog-container">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" routerLink='/admin/adminarticles'>Главная</a>
+      </div>
+    </div>
+    <button class="btn btn-secondary btn-sm my-1" routerLink='/user/registration'>Вход/Регистрация</button>
+  </nav>
+
+  <div class="blog-view">
+    <app-article class="blog-item" *ngFor="let article of posts" [articleItem]='article'></app-article>
+    <mat-spinner *ngIf="loading" style="margin-top: 300px; position: absolute;"></mat-spinner>
+  </div>
+
+  <div class="main-menu">
+    <h4 class="menu-header">Фильтры и поиск</h4>
+
+    <div class="menu-subtitle">Категория</div>
+    <mat-select>
+      <mat-option>None</mat-option>
+    </mat-select>
+    <mat-divider></mat-divider>
+
+    <app-pagination (goPrev)="onPrevPage()" (goNext)="onNextPage()" class="pagination-btns" [page]="page" [prev]="prev">
+    </app-pagination>
+
+  </div>
+</div>
