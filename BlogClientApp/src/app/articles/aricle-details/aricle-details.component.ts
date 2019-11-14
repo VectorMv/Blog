@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Post, ArticleService } from 'src/app/shared/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -9,9 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AricleDetailsComponent implements OnInit {
 
-  private _id: number;
-  articleItem: Post;
-
+  private id: number;
+  articleItem:Post ;
+  //articleItem: Post;
   isAdmin = false;
   
   constructor(private route: ActivatedRoute, private service: ArticleService, private router: Router) { }
@@ -22,13 +22,26 @@ export class AricleDetailsComponent implements OnInit {
       this.isAdmin = true;
     }
 
+    
+
     this.route.paramMap.subscribe(params =>{
-    this._id = +params.get('id');
+      this.id = +params.get('id');
+      this.getArticleById();
     });
 
-    this.service.getPost(this._id).subscribe(data => {this.articleItem = data; console.log(this.articleItem);});
+    
   }
 
+  getArticleById(){
+
+    this.service.getPost(this.id).subscribe(data => {
+      this.articleItem = data;
+      console.log(this.articleItem);
+    },
+    err => {
+      console.log(err);
+    });
+  }
   goBack(){
     if(localStorage.getItem('token') != null)
     {
@@ -40,7 +53,7 @@ export class AricleDetailsComponent implements OnInit {
   }
 
   deletePost(){
-    this.service.deletePost(this._id).subscribe(data =>{ 
+    this.service.deletePost(this.id).subscribe(data =>{ 
       this.router.navigateByUrl('/admin/adminarticles');
     },
     err => {

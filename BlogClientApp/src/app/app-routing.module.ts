@@ -16,7 +16,10 @@ import { CreateArticleComponent } from './admin-panel/create-article/create-arti
 
 const routes: Routes = [
   {path:'',redirectTo:'articles',pathMatch:'full'},
-  {path:'articles', component: ArticlesComponent },
+
+  {path:'articles', component: ArticlesComponent,},
+  {path:'articles/:id', component: AricleDetailsComponent },
+
   {
     path: 'user', component: UserComponent,
     children:[
@@ -24,14 +27,16 @@ const routes: Routes = [
       {path: 'login', component: LoginComponent }
     ]
   },
-  {path:'articles/:id', component: AricleDetailsComponent },
+
+  
+  
   {
     path:'admin',component:AdminPanelComponent,canActivate:[AuthGuard],
     children:[
       {path:'categories',component:CategoriesComponent},
       {path:'adminarticles',component:AdminArticlesComponent},
       {path:'tags',component:TagsComponent},
-      {path: 'create',component: CreateArticleComponent }
+      {path:'create',component: CreateArticleComponent }
     ]
   },
   

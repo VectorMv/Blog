@@ -1,12 +1,11 @@
 <button class="btn btn-secondary ml-2" (click)="goBack()" style="position: fixed; left: 87%;top: 90%; width: 100px;">Назад</button>
 <button *ngIf="isAdmin" type="button" class="btn btn-danger mr-4" (click)="deletePost()" style="position: fixed; top: 90%; width: 100px;">Удалить</button>
 
-<div class="main-card">
+<div class="main-card" *ngIf="articleItem">
   <div class="img" [ngStyle]="{'background-image':'url(' + articleItem.heroImage + ')'}"></div>
-  <!-- [ngStyle]="{'background-image': 'url(' + articleItem.heroImage + ')'}" -->
   <div class="main-info">
     <div class="main-info__descr">
-      <h3 class="blog__post__title">{{articleItem.name}}</h3>
+      <h3 class="blog__post__title"  >{{articleItem.name}}</h3>
       <a class="blog__post__description">{{articleItem.description}}</a>
     </div>
   </div>

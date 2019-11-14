@@ -22,38 +22,63 @@ namespace Blog.Controllers
 
         // GET: api/Articles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles(int page = 1, int size = 2)
+        public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles(string categorySort = "none", int page = 1, int size = 9)
         {
-            return await _context.Articles
-                .Include(c => c.CategoryNavigation)
-                .Include(t => t.TagsNavigation)
-                .Select(s => new ArticlesModel
-                 {
-                     ArticleId = s.ArticleId,
-                     Name = s.Name,
-                     ShortDescription = s.ShortDescription,
-                     Description = s.Description,
-                     HeroImage = s.HeroImage,
-                     PublicationDate = s.PublicationDate,
-                     CategoryId = s.CategoryNavigation.CategoryId,
-                     CategoryName = s.CategoryNavigation.CategoryName,
-                     Tags = s.TagsNavigation.Select(ss => ss.Tag.TagName).ToArray(),
+            var articles = _context.Articles
+                    .Include(c => c.CategoryNavigation)
+                    .Include(t => t.TagsNavigation)
+                    .Select(s => new ArticlesModel
+                    {
+                        ArticleId = s.ArticleId,
+                        Name = s.Name,
+                        ShortDescription = s.ShortDescription,
+                        Description = s.Description,
+                        HeroImage = s.HeroImage,
+                        PublicationDate = s.PublicationDate,
+                        CategoryId = s.CategoryNavigation.CategoryId,
+                        CategoryName = s.CategoryNavigation.CategoryName,
+                        Tags = s.TagsNavigation.Select(ss => ss.Tag.TagName).ToArray(),
 
-                 }).OrderByDescending(sort => sort.ArticleId).Skip((page - 1) * size).Take(size).ToListAsync();
+                    });//.OrderByDescending(sort => sort.ArticleId).Skip((page - 1) * size).Take(size).ToListAsync();
+
+            if (!string.IsNullOrEmpty(categorySort) && categorySort.ToLower() != "none")
+            {
+                articles = articles.Where(sort => sort.CategoryName == categorySort);
+            }
+            
+
+
+            return await articles.OrderByDescending(sort => sort.ArticleId).Skip((page - 1) * size).Take(size).ToListAsync();
+              
         }
 
         // GET: api/Articles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Articles>> GetArticles(int id)
+        public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles(int id)
         {
-            var articles = await _context.Articles.FindAsync(id);
+            //var articles = 
 
-            if (articles == null)
-            {
-                return NotFound();
-            }
+            //if (articles == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return articles;
+            return await _context.Articles
+                    .Include(c => c.CategoryNavigation)
+                    .Include(t => t.TagsNavigation)
+                    .Select(s => new ArticlesModel
+                    {
+                        ArticleId = s.ArticleId,
+                        Name = s.Name,
+                        ShortDescription = s.ShortDescription,
+                        Description = s.Description,
+                        HeroImage = s.HeroImage,
+                        PublicationDate = s.PublicationDate,
+                        CategoryId = s.CategoryNavigation.CategoryId,
+                        CategoryName = s.CategoryNavigation.CategoryName,
+                        Tags = s.TagsNavigation.Select(ss => ss.Tag.TagName).ToArray(),
+
+                    }).Where(artc => artc.ArticleId == id).ToListAsync();
         }
 
         // PUT: api/Articles/5

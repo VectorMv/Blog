@@ -3,7 +3,7 @@
     justify-content: center;
     flex-wrap: wrap;
     margin-top:50px;
-    width: 80%;
+    width: 100%;
 }
 .pagination-btns{
     display: inline-block;
@@ -24,7 +24,7 @@
 }
 
 .blog-item{
-    flex-basis: 45%;
+    flex-basis: 33%;
 }
 
 .blog-container{

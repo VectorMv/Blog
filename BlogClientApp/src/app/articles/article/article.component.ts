@@ -18,7 +18,7 @@ export class ArticleComponent implements OnInit {
     
   }
 
-  onClick(articleId: number){
-    this.router.navigate(['/articles/',articleId])
+  onClick(articleId: number):void{
+    this.router.navigateByUrl('/articles/' + articleId);
   }
 }
