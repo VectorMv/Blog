@@ -23,14 +23,16 @@ export class ArticleService {
 
   readonly BaseURI = "http://localhost:50558/api/articles";
 
-  getPosts(pageNumber: number = 1, categorySort: string = "none"): Observable<Post[]>{ 
-    return this.http.get<Post[]>(`${this.BaseURI}?page=${pageNumber}&categorySort=${categorySort}`);
+  getPosts(pageNumber: number = 1, categorySort: string = "none", tagsSort:string = "none"): Observable<Post[]>{ 
+
+    return this.http.get<Post[]>(`${this.BaseURI}?categorySort=${categorySort}&tagsSort=${tagsSort}&page=${pageNumber}`);
+
   }
 
-  getPost(articleId:number):Observable<Post>{
+  getPost(articleId:number):Observable<Post[]>{
 
     console.log("получение статьи по id: " + articleId);
-    return this.http.get<Post>(`${this.BaseURI}/${articleId}`);
+    return this.http.get<Post[]>(`${this.BaseURI}/${articleId}`);
   }
 
   addPost(article: Post){

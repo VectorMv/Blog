@@ -19,6 +19,10 @@ export class CategoriesComponent implements OnInit {
   categories: Category[];
 
   addCategory = false;
+  emptyAddField = false; 
+  emptyUpdateField = false;
+  selectedCategory = false;
+  emptyDeleteField = false;
 
   constructor(private service: CategoryService) { }
 
@@ -41,8 +45,16 @@ export class CategoriesComponent implements OnInit {
 
   AddCategory(form: NgForm){
 
+    if(form.value.addCategory.trim() == ''){
+      console.log("Пустое поле");
+      this.emptyAddField = true;
+      return;
+    }
+
+    this.emptyAddField = false;
+
     let ctgr = new Category;
-    ctgr.categoryName = form.value.addCategory;
+    ctgr.categoryName = form.value.addCategory.trim();
 
     this.service.addCategory(ctgr).subscribe(data => {
       this.getCategories();
@@ -52,11 +64,18 @@ export class CategoriesComponent implements OnInit {
       console.log(err);
       this.addCategory = true;
     });
-    
+
     form.reset();
   }
 
   DeleteCategory(form: NgForm){
+
+    if(form.value.deleteCtgr === undefined){
+      this.emptyDeleteField = true;
+      return;
+    }
+
+    this.emptyDeleteField = false;
 
     this.service.deleteCategory(form.value.deleteCtgr).subscribe(data => {
       this.getCategories();
@@ -71,10 +90,25 @@ export class CategoriesComponent implements OnInit {
   UpdateCategory(form: NgForm){
     console.log(form.value);
 
+    if(form.value.newCategory.trim() == ''){
+      this.emptyUpdateField = true;
+      return;
+    }
+
+    if(form.value.forUpdateId === undefined){
+      this.emptyUpdateField = false;
+      this.selectedCategory = true;
+      return;
+    }
+    
+
+    this.emptyUpdateField = false;
+    this.selectedCategory = false;
+
     let category = new Category();
 
     category.categoryId = form.value.forUpdateId;
-    category.categoryName = form.value.newCategory;
+    category.categoryName = form.value.newCategory.trim();
     
     console.log(category);
 

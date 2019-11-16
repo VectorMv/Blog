@@ -11,6 +11,7 @@
         </div>
       </form>
       <label *ngIf="addTag" class="text-danger">Тэг уже существует</label>
+      <label *ngIf="emptyAddField" class="text-danger">Пустое поле</label>
     </div>
   </div>
 
@@ -32,7 +33,7 @@
           <button type="submit" class="btn btn-outline-danger ml-2" style="width: 100px;">Удалить</button>
         </div>
       </form>
-
+      <label *ngIf="selectedTag" class="text-danger">Выберите тэг</label>
     </div>
   </div>
 

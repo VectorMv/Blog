@@ -11,6 +11,7 @@
         </div>
       </form>
       <label *ngIf="addCategory" class="text-danger">Категория уже существует</label>
+      <label *ngIf="emptyAddField" class="text-danger">Пустое поле</label>
     </div>
   </div>
 
@@ -32,7 +33,7 @@
           <button type="submit" class="btn btn-outline-danger ml-2" style="width: 100px;">Удалить</button>
         </div>
       </form>
-
+      <label *ngIf="emptyDeleteField" class="text-danger">Выберите категорию</label>
     </div>
   </div>
 
@@ -53,7 +54,8 @@
           <button type="submit" class="btn btn-outline-secondary ml-2 w-10" style="width: 100px;">Изменить</button>
         </div>
       </form>
-
+      <label *ngIf="emptyUpdateField" class="text-danger">Пустое поле</label>
+      <label *ngIf="selectedCategory" class="text-danger">Выберите категорию</label>
     </div>
   </div>
 </div>

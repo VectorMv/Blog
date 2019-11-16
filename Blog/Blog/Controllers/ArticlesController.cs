@@ -22,47 +22,70 @@ namespace Blog.Controllers
 
         // GET: api/Articles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles(string categorySort = "none", int page = 1, int size = 9)
+        public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles( string categorySort = "none",string tagsSort = "none",int page = 1, int size = 20)
         {
-            var articles = _context.Articles
-                    .Include(c => c.CategoryNavigation)
-                    .Include(t => t.TagsNavigation)
-                    .Select(s => new ArticlesModel
-                    {
-                        ArticleId = s.ArticleId,
-                        Name = s.Name,
-                        ShortDescription = s.ShortDescription,
-                        Description = s.Description,
-                        HeroImage = s.HeroImage,
-                        PublicationDate = s.PublicationDate,
-                        CategoryId = s.CategoryNavigation.CategoryId,
-                        CategoryName = s.CategoryNavigation.CategoryName,
-                        Tags = s.TagsNavigation.Select(ss => ss.Tag.TagName).ToArray(),
 
-                    });//.OrderByDescending(sort => sort.ArticleId).Skip((page - 1) * size).Take(size).ToListAsync();
+            List<string> tagsArr = new List<string>();
+
+            if (!string.IsNullOrEmpty(tagsSort) && tagsSort.ToLower() != "none")
+            {
+                tagsArr = tagsSort.Split(',').ToList();
+            }
+
+
+            var articles = (tagsArr == null || tagsArr.Count <= 0) ?
+            _context.Articles.Include(c => c.CategoryNavigation)
+            .Include(t => t.TagsNavigation)
+            .Select(s => new ArticlesModel
+            {
+                ArticleId = s.ArticleId,
+                Name = s.Name,
+                ShortDescription = s.ShortDescription,
+                Description = s.Description,
+                HeroImage = s.HeroImage,
+                PublicationDate = s.PublicationDate,
+                CategoryId = s.CategoryNavigation.CategoryId,
+                CategoryName = s.CategoryNavigation.CategoryName,
+                Tags = s.TagsNavigation.Select(ss => ss.Tag.TagName).ToArray(),
+            }) :
+            _context.Articles
+            .Include(c => c.CategoryNavigation)
+            .Include(t => t.TagsNavigation)
+            .Where(tags => tagsArr.Any(s => tags.TagsNavigation.Select(ss => ss.Tag.TagName).Contains(s)))
+            .Select(s => new ArticlesModel
+            {
+                ArticleId = s.ArticleId,
+                Name = s.Name,
+                ShortDescription = s.ShortDescription,
+                Description = s.Description,
+                HeroImage = s.HeroImage,
+                PublicationDate = s.PublicationDate,
+                CategoryId = s.CategoryNavigation.CategoryId,
+                CategoryName = s.CategoryNavigation.CategoryName,
+                Tags = s.TagsNavigation.Select(ss => ss.Tag.TagName).ToArray(),
+            });
+
 
             if (!string.IsNullOrEmpty(categorySort) && categorySort.ToLower() != "none")
             {
                 articles = articles.Where(sort => sort.CategoryName == categorySort);
             }
-            
+
+            //articles = articles.;
+
+            //if(tags != null)
+            //{
+            //    articles = articles.Where(sort => sort.Tags == tags);
+            //}
 
 
             return await articles.OrderByDescending(sort => sort.ArticleId).Skip((page - 1) * size).Take(size).ToListAsync();
-              
         }
 
         // GET: api/Articles/5
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles(int id)
         {
-            //var articles = 
-
-            //if (articles == null)
-            //{
-            //    return NotFound();
-            //}
-
             return await _context.Articles
                     .Include(c => c.CategoryNavigation)
                     .Include(t => t.TagsNavigation)
@@ -78,7 +101,7 @@ namespace Blog.Controllers
                         CategoryName = s.CategoryNavigation.CategoryName,
                         Tags = s.TagsNavigation.Select(ss => ss.Tag.TagName).ToArray(),
 
-                    }).Where(artc => artc.ArticleId == id).ToListAsync();
+                    }).Where(i => i.ArticleId == id).ToListAsync();
         }
 
         // PUT: api/Articles/5

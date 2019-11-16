@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Post, ArticleService } from 'src/app/shared/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdditionalDataService, AdditionalInfo } from 'src/app/shared/additional-data.service';
 
 @Component({
   selector: 'app-aricle-details',
@@ -10,11 +11,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AricleDetailsComponent implements OnInit {
 
   private id: number;
-  articleItem:Post ;
-  //articleItem: Post;
+  articleItem:Post[] ;
   isAdmin = false;
+
+  //additionalData:AdditionalInfo[];
   
-  constructor(private route: ActivatedRoute, private service: ArticleService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private service: ArticleService, private router: Router, private additionalService: AdditionalDataService ) { }
 
   ngOnInit() {
     if(localStorage.getItem('token') != null)
@@ -22,18 +24,16 @@ export class AricleDetailsComponent implements OnInit {
       this.isAdmin = true;
     }
 
-    
-
     this.route.paramMap.subscribe(params =>{
       this.id = +params.get('id');
       this.getArticleById();
+      //this.getAdditionalData();
     });
 
     
   }
 
   getArticleById(){
-
     this.service.getPost(this.id).subscribe(data => {
       this.articleItem = data;
       console.log(this.articleItem);
@@ -42,6 +42,17 @@ export class AricleDetailsComponent implements OnInit {
       console.log(err);
     });
   }
+
+  // getAdditionalData(){
+  //   this.additionalService.getAdditionalInfo(this.id).subscribe(data => {
+  //     this.additionalData =  data;
+  //     console.log(this.additionalData);
+  //   },
+  //   err => {
+  //     console.log(err);
+  //   });
+  // }
+  
   goBack(){
     if(localStorage.getItem('token') != null)
     {

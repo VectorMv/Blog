@@ -15,6 +15,8 @@ export class TagsComponent implements OnInit {
   selectedValue: string;
 
   addTag = false;
+  emptyAddField = false;
+  selectedTag = false;
 
   tag: Tag[];
 
@@ -37,8 +39,16 @@ export class TagsComponent implements OnInit {
   }
 
   AddTag(form: NgForm){
+
+    if(form.value.addTag.trim() == ''){
+      this.emptyAddField = true;
+      return;
+    }
+    
+    this.emptyAddField = false;
+
     let tag = new Tag;
-    tag.tagName = form.value.addTag;
+    tag.tagName = form.value.addTag.trim();
 
     this.service.addTag(tag).subscribe(data => {
       this.getAllTags();
@@ -54,6 +64,13 @@ export class TagsComponent implements OnInit {
 
   DeleteTag(form: NgForm){
     console.log(form.value.deleteTagId);
+
+    if(form.value.deleteTagId === undefined){
+      this.selectedTag = true;
+      return;
+    }
+
+    this.selectedTag = false;
 
     this.service.deleteTag(form.value.deleteTagId).subscribe(data => {
       this.getAllTags();

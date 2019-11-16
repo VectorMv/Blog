@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+
+
 import {MatCardModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -13,7 +15,9 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material';
+import {MatInputModule} from '@angular/material/input';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,6 +40,9 @@ import { ArticleExtendedComponent } from './admin-panel/article-extended/article
 import { TagService } from './shared/tag.service';
 import { CategoryService } from './shared/category.service';
 import { CreateArticleComponent } from './admin-panel/create-article/create-article.component';
+import { AdditionalDataService } from './shared/additional-data.service';
+
+
 
 
 @NgModule({
@@ -68,8 +75,11 @@ import { CreateArticleComponent } from './admin-panel/create-article/create-arti
     MatSelectModule,
     MatDividerModule,
     MatDialogModule,
+    MatDatepickerModule,
     HttpClientModule,
     MatTabsModule,
+    MatNativeDateModule,
+    MatInputModule,
     FormsModule,
     MatProgressSpinnerModule
   ],
@@ -77,7 +87,8 @@ import { CreateArticleComponent } from './admin-panel/create-article/create-arti
     UserService, 
     ArticleService,
     TagService,
-    CategoryService
+    CategoryService,
+    AdditionalDataService
   ],
   bootstrap: [AppComponent],
  

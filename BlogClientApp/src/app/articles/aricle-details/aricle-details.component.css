@@ -17,12 +17,12 @@
     background-color: #212121;
     padding: 20px;
     font-size: 14px;
-    justify-content: center;
+    justify-content: stretch;
 }
 .main-info__descr{
     min-height: 310px;
     overflow: hidden;
-    text-align: center;
+    /* text-align: center; */
 }
 .blog__post__title {
     overflow: hidden;
@@ -34,13 +34,16 @@
     margin-bottom: 8px;
     color: inherit;
     color: #e8e8e8;
+    text-align: left;
 
 }
 .blog__post__groups {
     overflow: hidden;
-    font-size: 12px;
+    font-size: 14px;
     padding-bottom: 10px;
     max-height: 34px;
+    display: flex;
+    flex-wrap: wrap;
 }
 .blog__post__groups a{
     color: #7D7D7D;
@@ -53,10 +56,10 @@
 .blog__post__description{
     font-size: 16px;
     line-height: 26px;
-    text-decoration: none;
     color: #e8e8e8;
     min-height: 90%;
     display: block;
+    text-align: justify;
 }
 .blog__post__footer {
     background-color: #212121;
@@ -71,7 +74,30 @@
     display: inline-block;
     width: 30%;
 }
+.blog__post_subtitle{
+    color: #7D7D7D;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.blog__post_subtitle2{
+    color: #7D7D7D;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 5px;
+}
 
 
+.container-loading {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%; 
 
-
+}
