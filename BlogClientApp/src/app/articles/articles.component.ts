@@ -41,17 +41,9 @@ export class ArticlesComponent implements OnInit {
     }
     else
     {
-
-    // this.route.queryParams.subscribe(params =>{
-    //   this.page = +params['page'];
-    //   //console.log(this.page);
-    //   this.getArticles();
-    //   });
       this.getArticles();
       this.getCategories();
-      this.getTags();
-    
-      
+      this.getTags();     
     }
   }
 
@@ -59,7 +51,7 @@ export class ArticlesComponent implements OnInit {
   getArticles(){
     this.loading = true;
 
-    this.service.getPosts(this.page,this.categorySort).subscribe(data => {
+    this.service.getPosts().subscribe(data => {
       this.posts = data;
       console.log(this.posts);
       this.loading = false;
@@ -127,17 +119,38 @@ export class ArticlesComponent implements OnInit {
     console.log(form.value);
 
     let tegsString : string;
+    let minDate: Date;
+    let maxDate: Date;
 
-    if(form.value.tags === undefined){
+    if(form.value.tags === undefined || form.value.tags == null){
       tegsString = "none";
     }
     else{
       tegsString = form.value.tags.join();
     }
-    
-    console.log(tegsString);
 
-    this.service.getPosts(1,this.categorySort,tegsString).subscribe(data => {
+    if(form.value.firstDate == null || form.value.firstDate == undefined){
+      minDate = new Date(2019,0,1);
+      this.date1 = minDate;
+    }
+    else{
+      minDate = form.value.firstDate;
+    }
+
+    if(form.value.secondDate == null || form.value.secondDate == undefined){
+      maxDate = new Date();    
+      this.date2 = maxDate;
+    }
+    else{
+      maxDate = form.value.secondDate;
+      maxDate.setDate(maxDate.getDate() + 1);
+    }    
+    
+    // console.log(tegsString);
+    // console.log(minDate);
+    // console.log(maxDate);
+
+    this.service.getPosts(1,this.categorySort,tegsString,minDate,maxDate).subscribe(data => {
       this.posts = data;
       console.log(this.posts);
       this.loading = false;
@@ -145,6 +158,16 @@ export class ArticlesComponent implements OnInit {
     err => {
       console.log(err);
     });
+  }
+
+  resetForm(form: NgForm){
+    form.reset();
+
+    this.date1 = new Date(2019,0,1);
+    this.date2 = new Date();
+    this.categorySort = "none";
+
+    this.getArticles();
   }
 
 }

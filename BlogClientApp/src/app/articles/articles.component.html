@@ -58,9 +58,10 @@
       </mat-form-field>
 
       <button type="button" class="btn btn-secondary btn-sm mt-1" style="width: 100%;" (click)="sortArticles(sortForm)">Поиск</button>
+      <button type="button" class="btn btn-outline-secondary btn-sm mt-1" style="width: 100%;" (click)="resetForm(sortForm)">Сбросить фильтры</button>
     </form>
 
-    <button type="button" class="btn btn-secondary btn-sm mt-1" style="width: 100%;">Сбросить фильтры</button>
+    
 
     <app-pagination (goPrev)="onPrevPage($event)" (goNext)="onNextPage()" class="pagination-btns" [page]="page"
       [prev]="prev">

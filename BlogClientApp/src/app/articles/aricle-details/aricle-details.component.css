@@ -1,103 +1,160 @@
-.main-card{
-    margin-top: 70px;
-    padding: 0 15px 30px;
-    min-height: 660px;
-    width: 70%;
-    margin-right: auto;
-    margin-left: auto;
+button{
+    border-radius: 0;
 }
-.img{
-    height: 420px;
-    background-color:#212121;
-    background-size: cover;  
-    background-position: center;
+.main-card {
+  margin-top: 70px;
+  padding: 0 15px 30px;
+  min-height: 660px;
+  width: 70%;
+  margin-right: auto;
+  margin-left: auto;
 }
-.main-info{
-    display: flex;
-    background-color: #212121;
-    padding: 20px;
-    font-size: 14px;
-    justify-content: stretch;
+
+.img {
+  height: 420px;
+  background-color: #212121;
+  background-size: cover;
+  background-position: center;
 }
-.main-info__descr{
-    min-height: 310px;
-    overflow: hidden;
-    /* text-align: center; */
+
+.main-info {
+  display: flex;
+  background-color: #212121;
+  padding: 20px;
+  font-size: 14px;
+  justify-content: stretch;
 }
+
+.main-info__descr {
+  min-height: 310px;
+  overflow: hidden;
+  /* text-align: center; */
+}
+
 .blog__post__title {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 600;
-    font-size: 21px;
-    line-height: 26px;
-    margin-top: 20px;
-    margin-bottom: 8px;
-    color: inherit;
-    color: #e8e8e8;
-    text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 26px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: inherit;
+  color: #e8e8e8;
+  text-align: left;
 
 }
+
 .blog__post__groups {
-    overflow: hidden;
-    font-size: 14px;
-    padding-bottom: 10px;
-    max-height: 34px;
-    display: flex;
-    flex-wrap: wrap;
-}
-.blog__post__groups a{
-    color: #7D7D7D;
-    
-}
-.blog__post__group {
-    margin-right: 10px;
-    text-decoration: none;
-}
-.blog__post__description{
-    font-size: 16px;
-    line-height: 26px;
-    color: #e8e8e8;
-    min-height: 90%;
-    display: block;
-    text-align: justify;
-}
-.blog__post__footer {
-    background-color: #212121;
-    color: #7D7D7D;
-    white-space: nowrap;
-    display: block;
-    height: 45px;
-    padding: 0 20px;
-    font-size: 12px;
-}
-.blog__post__footer-date{
-    display: inline-block;
-    width: 30%;
-}
-.blog__post_subtitle{
-    color: #7D7D7D;
-    font-size: 14px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 14px;
+  padding-bottom: 10px;
+  max-height: 34px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.blog__post_subtitle2{
-    color: #7D7D7D;
-    font-size: 14px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 5px;
+.blog__post__groups a {
+  color: #7D7D7D;
+
+}
+
+.blog__post__group {
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.blog__post__description {
+  font-size: 16px;
+  line-height: 26px;
+  color: #e8e8e8;
+  min-height: 90%;
+  display: block;
+  text-align: justify;
+}
+
+.blog__post__footer {
+  background-color: #212121;
+  color: #7D7D7D;
+  white-space: nowrap;
+  display: block;
+  height: 45px;
+  padding: 0 20px;
+  font-size: 12px;
+}
+
+.blog__post__footer-date {
+  display: inline-block;
+  width: 30%;
+}
+
+.blog__post_subtitle {
+  color: #7D7D7D;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.blog__post_subtitle2 {
+  color: #7D7D7D;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 5px;
 }
 
 
 .container-loading {
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100%; 
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
 
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  padding: 0 15px 30px;
+  margin: 70px auto 0 auto;
+}
+
+.wrapped-div {
+  background: #212121;
+  padding: 30px;
+  width: 100%;
+  max-width: 1140px;
+  position: relative;
+}
+
+
+label:not(:first-child) {
+  margin-top: 20px;
+  font-size: 16px;
+  min-width: 200px;
+}
+
+.my_container {
+  margin-top: 70px;
+}
+
+.text-danger {
+  font-size: 12px;
+  position: relative;
+}
+
+.panel{
+    position: fixed;
+    width: 15%;
+    max-width: 200px;
+    background: #212121;
+    height: auto;
+    /* top: 86%; */
 }

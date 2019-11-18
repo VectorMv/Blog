@@ -22,8 +22,21 @@ namespace Blog.Controllers
 
         // GET: api/Articles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles( string categorySort = "none",string tagsSort = "none",int page = 1, int size = 20)
+        public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles( string categorySort = "none",string tagsSort = "none",DateTime? minDate = null,DateTime? maxDate = null, int page = 1, int size = 20)
         {
+            //maxDate = new DateTime(2019,11,8,23,59,59);
+            //minDate = new DateTime(2019, 11, 9);
+
+
+            if (minDate == null)
+            {
+                minDate = DateTime.MinValue;
+            }
+
+            if(maxDate == null)
+            {
+                maxDate = DateTime.MaxValue;
+            }
 
             List<string> tagsArr = new List<string>();
 
@@ -47,7 +60,7 @@ namespace Blog.Controllers
                 CategoryId = s.CategoryNavigation.CategoryId,
                 CategoryName = s.CategoryNavigation.CategoryName,
                 Tags = s.TagsNavigation.Select(ss => ss.Tag.TagName).ToArray(),
-            }) :
+            }).Where(date => date.PublicationDate >= minDate && date.PublicationDate <= maxDate) :
             _context.Articles
             .Include(c => c.CategoryNavigation)
             .Include(t => t.TagsNavigation)
@@ -63,7 +76,7 @@ namespace Blog.Controllers
                 CategoryId = s.CategoryNavigation.CategoryId,
                 CategoryName = s.CategoryNavigation.CategoryName,
                 Tags = s.TagsNavigation.Select(ss => ss.Tag.TagName).ToArray(),
-            });
+            }).Where(date => date.PublicationDate >= minDate && date.PublicationDate <= maxDate);
 
 
             if (!string.IsNullOrEmpty(categorySort) && categorySort.ToLower() != "none")

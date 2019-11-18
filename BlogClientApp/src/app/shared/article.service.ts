@@ -23,9 +23,9 @@ export class ArticleService {
 
   readonly BaseURI = "http://localhost:50558/api/articles";
 
-  getPosts(pageNumber: number = 1, categorySort: string = "none", tagsSort:string = "none"): Observable<Post[]>{ 
+  getPosts(pageNumber: number = 1, categorySort: string = "none", tagsSort: string = "none", minDate: Date = new Date(2000,0,1), maxDate: Date = new Date()): Observable<Post[]>{
 
-    return this.http.get<Post[]>(`${this.BaseURI}?categorySort=${categorySort}&tagsSort=${tagsSort}&page=${pageNumber}`);
+    return this.http.get<Post[]>(`${this.BaseURI}?categorySort=${categorySort}&tagsSort=${tagsSort}&minDate=${minDate.toISOString()}&maxDate=${maxDate.toISOString()}&page=${pageNumber}`);
 
   }
 
