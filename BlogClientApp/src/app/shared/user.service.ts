@@ -23,6 +23,7 @@ export class UserService {
 
   });
   
+  //Проверка пароля
   comparePasswords(fb:FormGroup){
 
     let confirmPasswordCtrl =  fb.get('ConfirmPassword');
@@ -37,6 +38,7 @@ export class UserService {
     }
   }
 
+  //Регистрация пользователя
   register(){
     let body ={
       UserName: this.formModule.value.UserName,
@@ -48,10 +50,12 @@ export class UserService {
     return this.http.post(this.BaseURI + '/ApplicationUser/Register', body);
   }
 
+  //Авторизация пользователя
   login(formData){
     return this.http.post(this.BaseURI + '/ApplicationUser/Login', formData);
   }
 
+  //Получение профиля пользователя
   getUserProfile(){
     var tokenHeader = new HttpHeaders({'Authorization':'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.BaseURI +'/UserProfile', {headers: tokenHeader})

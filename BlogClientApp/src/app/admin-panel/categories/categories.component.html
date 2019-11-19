@@ -34,6 +34,7 @@
         </div>
       </form>
       <label *ngIf="emptyDeleteField" class="text-danger">Выберите категорию</label>
+      <label *ngIf="deleteError" class="text-danger">В категории присутствуют статьи</label>
     </div>
   </div>
 

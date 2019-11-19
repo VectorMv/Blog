@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class CreateArticleComponent implements OnInit {
 
-  
+  defaultImage: string = "https://demo.morethanthemes.com/tourismplus8/default/sites/default/files/2017-06/video-poster.jpg";
   selectedCategory: string;
   categories: Category[];
   tags: Tag[];
@@ -27,7 +27,7 @@ export class CreateArticleComponent implements OnInit {
     this.getTags()
   }
 
-  
+  //Получение всех категорий
   getCategories(){
     this.serviceCtgr.getCategories().subscribe(data => {
       this.categories = data
@@ -37,6 +37,7 @@ export class CreateArticleComponent implements OnInit {
     });
   }
 
+  //Получение всех тэгов
   getTags(){
     this.serviceTag.getTags().subscribe(data => {
       this.tags = data
@@ -46,13 +47,20 @@ export class CreateArticleComponent implements OnInit {
     });
   }
 
+  //Создание новой статьи
   createNewArticle(form: NgForm){
     console.log("статья добавлена");
 
     let newArtc = new Post();
 
     newArtc.categoryId = form.value.categoryValue;
-    newArtc.heroImage = form.value.imageLink;
+    
+    if(form.value.imageLink.trim() === ''){
+      newArtc.heroImage = this.defaultImage;
+    }else{
+      newArtc.heroImage = form.value.imageLink;
+    }
+    
     newArtc.name = form.value.name;
     newArtc.shortDescription = form.value.shortDescr;
     newArtc.description = form.value.fullDescr;
@@ -72,9 +80,8 @@ export class CreateArticleComponent implements OnInit {
 
   }
 
+  //Сброс значений формы.
   resetForm(form: NgForm){
     form.reset();
   }
-
-
 }

@@ -10,6 +10,7 @@ export class PaginationComponent implements OnInit {
   @Input() page:number;
   @Input() count:number;
   @Input() prev:boolean;
+  @Input() next:boolean;
 
   @Output() goPrev = new EventEmitter<boolean>();
   @Output() goNext = new EventEmitter<boolean>();
@@ -21,7 +22,7 @@ export class PaginationComponent implements OnInit {
   }
 
   onPrev(){
-    this.goPrev.emit(false);
+    this.goPrev.emit(true);
   }
 
   onNext(){

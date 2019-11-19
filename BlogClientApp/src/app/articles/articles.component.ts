@@ -29,8 +29,11 @@ export class ArticlesComponent implements OnInit {
   
   page:number = 1;
   prev = true;
+  next = false;
 
-
+  tegsString : string;
+  minDate: Date;
+  maxDate: Date;
 
   ngOnInit() {
     this.loading = true;
@@ -47,7 +50,7 @@ export class ArticlesComponent implements OnInit {
     }
   }
 
-
+  //Получение статей
   getArticles(){
     this.loading = true;
 
@@ -61,6 +64,7 @@ export class ArticlesComponent implements OnInit {
     }); 
   }
 
+  //Получение категорий
   getCategories(){
     this.categoryService.getCategories().subscribe(data => {
       this.categories = data;
@@ -71,6 +75,7 @@ export class ArticlesComponent implements OnInit {
     });
   }
 
+  //Получение тэгов
   getTags(){
     this.tagService.getTags().subscribe(data => {
       this.tags = data;
@@ -81,76 +86,81 @@ export class ArticlesComponent implements OnInit {
     })
   }
 
-  
+  //Переход на предыдушую страницу
   onPrevPage(event: boolean){
-    // console.log("Предыдущая страница");
-    // console.log(event);
+    
+    this.next = false;
+    this.loading = true;
 
-    // this.loading = true;
+    this.service.getPosts(--this.page,this.categorySort,this.tegsString,this.minDate,this.maxDate).subscribe(data => {
+      this.posts = data;
+      console.log(this.posts);
+      this.loading = false;
+    });
 
-    // this.service.getPosts(--this.page,this.categorySort).subscribe(data => {
-    //   this.posts = data;
-    //   console.log(this.posts);
-    //   this.loading = false;
-    // });
+    window.scrollTo(0,0);
 
-    // if(this.page === 1){ 
-    //   this.prev=true;
-    //   return;
-    // }
+    if(this.page === 1){ 
+      this.prev=true;
+      return;
+    }
   }
 
+  //Переход на следующую страницу
   onNextPage(){
+    this.prev=false;
+    this.loading = true;
 
-    // this.prev=false;
-    // this.loading = true;
+    console.log(this.categorySort);
 
-    // console.log(this.categorySort);
+    this.service.getPosts(++this.page,this.categorySort,this.tegsString,this.minDate,this.maxDate).subscribe(data => {
+      this.posts = data;
+      console.log(this.posts);
 
-    // this.service.getPosts(++this.page,this.categorySort).subscribe(data => {
-    //   this.posts = data;
-    //   console.log(this.posts);
-    //   this.loading = false;
-    // });
+      if(this.posts.length < 6){
+        this.next = true;
+      }
+
+      this.loading = false;
+    });
+
+    window.scrollTo(0,0);
 
   }
 
+  //Сортировка статей
   sortArticles(form: NgForm){
     console.log(form.value);
 
-    let tegsString : string;
-    let minDate: Date;
-    let maxDate: Date;
-
     if(form.value.tags === undefined || form.value.tags == null){
-      tegsString = "none";
+      this.tegsString = "none";
     }
     else{
-      tegsString = form.value.tags.join();
+      this.tegsString = form.value.tags.join();
     }
 
     if(form.value.firstDate == null || form.value.firstDate == undefined){
-      minDate = new Date(2019,0,1);
-      this.date1 = minDate;
+      this.minDate = new Date(2019,0,1);
+      this.date1 = this.minDate;
     }
     else{
-      minDate = form.value.firstDate;
+      this.minDate = form.value.firstDate;
     }
 
     if(form.value.secondDate == null || form.value.secondDate == undefined){
-      maxDate = new Date();    
-      this.date2 = maxDate;
+      this.maxDate = new Date();    
+      this.date2 = this.maxDate;
     }
     else{
-      maxDate = form.value.secondDate;
-      maxDate.setDate(maxDate.getDate() + 1);
+      this.maxDate = form.value.secondDate;
+      this.maxDate.setDate(this.maxDate.getDate() + 1);
     }    
-    
-    // console.log(tegsString);
-    // console.log(minDate);
-    // console.log(maxDate);
 
-    this.service.getPosts(1,this.categorySort,tegsString,minDate,maxDate).subscribe(data => {
+    this.page = 1;
+    this.prev = true;
+    this.next = false;
+
+    this.service.getPosts(this.page,this.categorySort,this.tegsString,this.minDate,this.maxDate).subscribe(data => {
       this.posts = data;
       console.log(this.posts);
       this.loading = false;
@@ -160,6 +170,7 @@ export class ArticlesComponent implements OnInit {
     });
   }
 
+  //Сбрасывает фильтры поиска
   resetForm(form: NgForm){
     form.reset();
 
@@ -167,6 +178,9 @@ export class ArticlesComponent implements OnInit {
     this.date2 = new Date();
     this.categorySort = "none";
 
+    this.page = 1;
+    this.prev = true;
+    this.next = false;
     this.getArticles();
   }
 

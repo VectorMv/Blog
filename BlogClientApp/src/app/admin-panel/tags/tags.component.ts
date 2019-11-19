@@ -24,12 +24,11 @@ export class TagsComponent implements OnInit {
 
   ngOnInit() {
     this.addTag = false;
-
     this.getAllTags();
   }
 
+  //Получние всех тэгов
   getAllTags(){
-    
     this.service.getTags().subscribe(data => {
       this.tag = data;
     },
@@ -38,6 +37,7 @@ export class TagsComponent implements OnInit {
     });
   }
 
+  //Добавление нового тэга
   AddTag(form: NgForm){
 
     if(form.value.addTag.trim() == ''){
@@ -62,6 +62,7 @@ export class TagsComponent implements OnInit {
     form.reset();
   }
 
+  //Удаление тэга
   DeleteTag(form: NgForm){
     console.log(form.value.deleteTagId);
 

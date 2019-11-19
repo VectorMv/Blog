@@ -17,6 +17,7 @@ export class RegistrationComponent implements OnInit {
     this.service.formModule.reset();
   }
 
+  //Регистрация нового пользователя
   onSubmit(){
     this.service.register().subscribe(
       (res:any) =>{

@@ -18,18 +18,18 @@ export class TagService {
 
   readonly BaseURI = "http://localhost:50558/api/tags";
 
+  //Получение всех тэгов
   getTags(): Observable<Tag[]>{
-
     return this.http.get<Tag[]>(this.BaseURI);
   }
 
+  //Добавление нового тэга
   addTag(newTag: Tag){
-
     return this.http.post(this.BaseURI, newTag);
   }
 
+  //Удаление тэга
   deleteTag(id: number){
-
     return this.http.delete(`${this.BaseURI}/${id}`);
   }
 

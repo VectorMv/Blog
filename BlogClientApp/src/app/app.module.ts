@@ -36,13 +36,9 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { CategoriesComponent } from './admin-panel/categories/categories.component';
 import { AdminArticlesComponent } from './admin-panel/admin-articles/admin-articles.component';
 import { TagsComponent } from './admin-panel/tags/tags.component';
-import { ArticleExtendedComponent } from './admin-panel/article-extended/article-extended.component';
 import { TagService } from './shared/tag.service';
 import { CategoryService } from './shared/category.service';
 import { CreateArticleComponent } from './admin-panel/create-article/create-article.component';
-import { AdditionalDataService } from './shared/additional-data.service';
-
-
 
 
 @NgModule({
@@ -59,7 +55,6 @@ import { AdditionalDataService } from './shared/additional-data.service';
     CategoriesComponent,
     AdminArticlesComponent,
     TagsComponent,
-    ArticleExtendedComponent,
     CreateArticleComponent,
   ],
   imports: [
@@ -87,8 +82,7 @@ import { AdditionalDataService } from './shared/additional-data.service';
     UserService, 
     ArticleService,
     TagService,
-    CategoryService,
-    AdditionalDataService
+    CategoryService
   ],
   bootstrap: [AppComponent],
  

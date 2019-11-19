@@ -1,4 +1,4 @@
-<div class="panel">
+<div *ngIf="articleItem" class="panel">
   <div class="btn-group-vertical w-100">
     <button class="btn btn-secondary btn-sm mr-4" (click)="goBack()">Назад</button>
     <button *ngIf="isAdmin && articleItem" type="button" class="btn btn-secondary btn-sm mr-4"
@@ -34,7 +34,7 @@
   <div class="blog__post__footer">
     <div style="display:flex; justify-content: space-between;">
       <div class="blog__post__footer-date">{{articleItem[0].publicationDate | date}}</div>
-      <button type="button" class="btn btn-outline-danger btn-sm" (click)="deletePost()">Удалить</button>
+      <button *ngIf="isAdmin" type="button" class="btn btn-outline-danger btn-sm" (click)="deletePost()">Удалить</button>
     </div>
   </div>
 </div>
@@ -44,48 +44,45 @@
   <div class="wrapper">
     <div class="wrapped-div">
 
-      <form #CreateArticle='ngForm'>
+      <form #UpdateArticle='ngForm' (submit)="updateArticle(UpdateArticle)">
 
-        <label>Ссылка на картинку (необязательно)</label>
+        <label>Ссылка на картинку</label>
         <input class="form-control" name="imageLink" ngModel maxlength="200" [(ngModel)]="editedArticle.heroImage">
 
-        <label>Название статьи *</label>
-        <input placeholder="(Без изменений)" class="form-control" name="name" ngModel required maxlength="80" [(ngModel)]="editedArticle.name">
+        <label>Название статьи</label>
+        <input placeholder="(Без изменений)" class="form-control" name="name" ngModel  maxlength="80" [(ngModel)]="editedArticle.name">
 
-        <label>Краткое описание *</label>
-        <textarea placeholder="(Без изменений)" class="form-control" name="shortDescr" rows="3" [(ngModel)]="editedArticle.shortDescription" required maxlength="200"></textarea>
+        <label>Краткое описание</label>
+        <textarea placeholder="(Без изменений)" class="form-control" name="shortDescr" rows="3" [(ngModel)]="editedArticle.shortDescription"  maxlength="200"></textarea>
 
-        <label>Полное описание *</label>
-        <textarea placeholder="(Без изменений)" class="form-control" name="fullDescr" rows="10" [(ngModel)]="editedArticle.description" required></textarea>
+        <label>Полное описание</label>
+        <textarea placeholder="(Без изменений)" class="form-control" name="fullDescr" rows="10" [(ngModel)]="editedArticle.description" ></textarea>
 
-        <label>Категория *</label>
+        <label>Категория</label>
         <label *ngIf="notChangedCategory">(Без изменений)</label>
         <div class="d-flex flex-column flex-grow-1" style="width: 300px;">
-          <mat-select [(ngModel)]="editedArticle.categoryName" name="categoryValue" required id="categorySelector" (selectionChange)="changedCategory()">
-            <mat-option>None</mat-option>
-            <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+          <mat-select [(ngModel)]="editedArticle.categoryName" name="categoryValue" (selectionChange)="changedCategory()">
+            <mat-option *ngFor="let category of categories" [value]="category.categoryName">
               {{category.categoryName}}
             </mat-option>
           </mat-select>
           <mat-divider></mat-divider>
         </div>
 
-        <label>Тэги (необязательно)</label>
+        <label>Тэги</label>
         <label *ngIf="notChangedTags">(Без изменений)</label>
         <div class="d-flex flex-column flex-grow-1" style="width: 300px;">
           <mat-select [(ngModel)]="editedArticle.tags" name="tags" multiple (selectionChange)="changedTags()">
-            <mat-option *ngFor="let tag of tags" [value]="tag.tagId">
+            <mat-option *ngFor="let tag of tags" [value]="tag.tagName">
               {{tag.tagName}}
             </mat-option>
           </mat-select>
           <mat-divider></mat-divider>
         </div>
+
         <div class="d-flex justify-content-between" style="margin-top: 30px;">
-          <button type="submit" class="btn btn-success" [disabled]="CreateArticle.invalid">Изменить</button>
-          <div>
-            <button type="button" class="btn btn-outline-danger mr-2">Очистить</button>
-            <button type="button" class="btn btn-outline-danger">Отмена</button>
-          </div>
+          <button type="submit" class="btn btn-success" [disabled]="UpdateArticle.invalid">Изменить</button>       
+          <button type="button" class="btn btn-outline-danger" (click)="restoreDefaultValues()">Отмена</button>
         </div>
       </form>
 

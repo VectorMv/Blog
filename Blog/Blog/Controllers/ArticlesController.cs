@@ -22,12 +22,8 @@ namespace Blog.Controllers
 
         // GET: api/Articles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles( string categorySort = "none",string tagsSort = "none",DateTime? minDate = null,DateTime? maxDate = null, int page = 1, int size = 20)
+        public async Task<ActionResult<IEnumerable<ArticlesModel>>> GetArticles( string categorySort = "none",string tagsSort = "none",DateTime? minDate = null,DateTime? maxDate = null, int page = 1, int size = 6)
         {
-            //maxDate = new DateTime(2019,11,8,23,59,59);
-            //minDate = new DateTime(2019, 11, 9);
-
-
             if (minDate == null)
             {
                 minDate = DateTime.MinValue;
@@ -84,14 +80,6 @@ namespace Blog.Controllers
                 articles = articles.Where(sort => sort.CategoryName == categorySort);
             }
 
-            //articles = articles.;
-
-            //if(tags != null)
-            //{
-            //    articles = articles.Where(sort => sort.Tags == tags);
-            //}
-
-
             return await articles.OrderByDescending(sort => sort.ArticleId).Skip((page - 1) * size).Take(size).ToListAsync();
         }
 
@@ -119,14 +107,39 @@ namespace Blog.Controllers
 
         // PUT: api/Articles/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArticles(int id, Articles articles)
+        public async Task<IActionResult> PutArticles(int id, ArticlesModel articlesModel)
         {
-            if (id != articles.ArticleId)
+            if (id != articlesModel.ArticleId)
             {
                 return BadRequest();
             }
 
+            var articles = new Articles()
+            {
+                ArticleId = articlesModel.ArticleId,
+                Name = articlesModel.Name,
+                HeroImage = articlesModel.HeroImage,
+                ShortDescription = articlesModel.ShortDescription,
+                Description = articlesModel.Description,
+                PublicationDate = articlesModel.PublicationDate,
+                Category = articlesModel.CategoryId
+            };
+
             _context.Entry(articles).State = EntityState.Modified;
+
+            var articleTags = _context.ArticlesTags.Where(s => s.ArticleId == articlesModel.ArticleId);
+            _context.ArticlesTags.RemoveRange(articleTags);
+
+            for (int i = 0; i < articlesModel.Tags.Length; i++)
+            {
+                var articleTag = new ArticlesTags()
+                {
+                    ArticleId = articles.ArticleId,
+                    TagId = _context.Tags.Where(name => name.TagName == articlesModel.Tags[i]).Select(s => s.TagId).First()
+                };
+
+                _context.ArticlesTags.Add(articleTag);
+            }
 
             try
             {

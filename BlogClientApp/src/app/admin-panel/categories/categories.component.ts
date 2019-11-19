@@ -23,17 +23,15 @@ export class CategoriesComponent implements OnInit {
   emptyUpdateField = false;
   selectedCategory = false;
   emptyDeleteField = false;
+  deleteError = false;
 
   constructor(private service: CategoryService) { }
 
   ngOnInit() {
-
-    this.addCategory = false;
-
     this.getCategories();
-
   }
 
+  //Получение всех категорий
   getCategories(){
     this.service.getCategories().subscribe(data => {
       this.categories = data
@@ -43,6 +41,7 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
+  //Добавление новой категории
   AddCategory(form: NgForm){
 
     if(form.value.addCategory.trim() == ''){
@@ -68,6 +67,7 @@ export class CategoriesComponent implements OnInit {
     form.reset();
   }
 
+  //Удаление категории
   DeleteCategory(form: NgForm){
 
     if(form.value.deleteCtgr === undefined){
@@ -76,17 +76,20 @@ export class CategoriesComponent implements OnInit {
     }
 
     this.emptyDeleteField = false;
+    this.deleteError = false;
 
     this.service.deleteCategory(form.value.deleteCtgr).subscribe(data => {
       this.getCategories();
     },
     err => {
       console.log(err);
+      this.deleteError = true;
     });
 
     form.reset();
   }
 
+  //Изменение категории
   UpdateCategory(form: NgForm){
     console.log(form.value);
 

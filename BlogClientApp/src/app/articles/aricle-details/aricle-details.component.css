@@ -1,6 +1,10 @@
 button{
     border-radius: 0;
 }
+button:focus{
+  box-shadow: none;
+}
+
 .main-card {
   margin-top: 70px;
   padding: 0 15px 30px;

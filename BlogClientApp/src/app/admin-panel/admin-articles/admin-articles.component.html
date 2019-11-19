@@ -1,21 +1,59 @@
 <div>
   <div class="blog-view">
     <app-article class="blog-item" *ngFor="let article of posts" [articleItem]='article'>
-    </app-article >
+    </app-article>
     <mat-spinner *ngIf="loading" style="margin-top: 300px; position: absolute;"></mat-spinner>
   </div>
 
   <div class="main-menu">
 
-    <h4 class="menu-header">Фильтры и поиск</h4>
+    <form #sortForm='ngForm'>
+      <div>
+        <h4 class="menu-header">Фильтры и поиск</h4>
+      </div>
 
-    <div class="menu-subtitle">Категория</div>
-    <mat-select>
-      <mat-option>None</mat-option>
-    </mat-select>
-    <mat-divider></mat-divider>
+      <div class="menu-subtitle">Категория</div>
+      <mat-form-field>
+        <mat-select [(ngModel)]="categorySort" name="sortCtgr">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let category of categories" [value]="category.categoryName">
+            {{category.categoryName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <app-pagination (goPrev)="onPrevPage()" (goNext)="onNextPage()" class="pagination-btns" [page]="page" [prev]="prev">
+      <div class="menu-subtitle">Тэги</div>
+      <mat-form-field>
+        <mat-select [(ngModel)]="selectedTags" name="tags" multiple>
+          <mat-option *ngFor="let tag of tags" [value]="tag.tagName">
+            {{tag.tagName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="menu-subtitle">Дата</div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker1" placeholder="С" name="firstDate" [(ngModel)]="date1">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker2" placeholder="По" name="secondDate" [(ngModel)]="date2">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+
+      <button type="button" class="btn btn-secondary btn-sm mt-1" style="width: 100%;"
+        (click)="sortArticles(sortForm)">Поиск</button>
+      <button type="button" class="btn btn-outline-secondary btn-sm mt-1" style="width: 100%;"
+        (click)="resetForm(sortForm)">Сбросить фильтры</button>
+    </form>
+
+    <app-pagination (goPrev)="onPrevPage($event)" (goNext)="onNextPage()" class="pagination-btns" [page]="page"
+      [prev]="prev" [next]="next">
     </app-pagination>
+
   </div>
 </div>
+

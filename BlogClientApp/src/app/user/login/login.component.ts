@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  //Авторизация пользователя
   onSubmit(form: NgForm){
     this.service.login(form.value).subscribe(
       (res:any) => {
